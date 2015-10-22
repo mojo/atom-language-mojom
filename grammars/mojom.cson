@@ -1,0 +1,187 @@
+'scopeName': 'source.mojom'
+'name': 'Mojom'
+'fileTypes': ['mojom']
+'patterns': [
+  {
+    'include': '#comments'
+  }
+  {
+    'include': '#literal'
+  }
+  {
+    'match': '\\b(import|module)\\b'
+    'name': 'keyword.control.mojom'
+  }
+  {
+    'match': '\\b(default|const)\\b'
+    'name': 'keyword.mojom'
+  }
+  {
+    'match': '\\b(bool|float|double|int8|int16|int32|int64|uint8|uint16|uint32|uint64|string)\\b'
+    'name': 'storage.type.basic.mojom'
+  }
+  {
+    'match': '\\b(handle|array|map)\\b'
+    'name': 'storage.type.compound.mojom'
+  }
+  {
+    'begin': '\\b(struct|union)\\b\\s*([_A-Za-z][_A-Za-z0-9]*)\\b'
+    'beginCaptures':
+      '1':
+        'name': 'storage.type.mojom'
+      '2':
+        'name': 'entity.name.type.mojom'
+    'end': '(?<=\\})'
+    'name': 'meta.struct-union-block.mojom'
+    'patterns': [
+      {
+        'begin': '\\{'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.section.block.begin.mojom'
+        'end': '\\}'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.section.block.end.mojom'
+        'name': 'meta.block.cpp'
+        'patterns': [
+          {
+            'include': '$base'
+          }
+        ]
+      }
+    ]
+  }
+  {
+    'begin': '\\b(interface)\\b\\s*([_A-Za-z][_A-Za-z0-9]*)\\b'
+    'beginCaptures':
+      '1':
+        'name': 'storage.type.mojom'
+      '2':
+        'name': 'entity.name.type.mojom'
+    'end': '(?<=\\})'
+    'name': 'meta.interface-block.mojom'
+    'patterns': [
+      {
+        'begin': '\\b([_A-Za-z][_A-Za-z0-9]*)\\b'
+        'beginCaptures':
+          '1':
+            'name': 'entity.name.function.mojom'
+        'end': '(?<=;)'
+        'patterns': [
+          {
+            'include': '$base'
+          }
+        ]
+      }
+      {
+        'include': '$base'
+      }
+    ]
+  }
+  {
+    'begin': '\\b(enum)\\b\\s*([_A-Za-z][_A-Za-z0-9]*)\\b'
+    'beginCaptures':
+      '1':
+        'name': 'storage.type.mojom'
+      '2':
+        'name': 'entity.name.type.mojom'
+    'end': '(?<=\\})'
+    'name': 'meta.enum-block.mojom'
+    'patterns': [
+      {
+        'include': '$base'
+      }
+    ]
+  }
+]
+'repository':
+  'comments':
+    'patterns': [
+      {
+        'begin': '/\\*'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.comment.begin.mojom'
+        'end': '\\*/'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.comment.end.mojom'
+        'name': 'comment.block.mojom'
+      }
+      {
+        'match': '\\*/.*\\n'
+        'name': 'invalid.illegal.stray-comment-end.mojom'
+      }
+      {
+        'begin': '(^[ \\t]+)?(?=//)'
+        'beginCaptures':
+          '1':
+            'name': 'punctuation.whitespace.comment.leading.mojom'
+        'end': '(?!\\G)'
+        'patterns': [
+          {
+            'begin': '//'
+            'beginCaptures':
+              '0':
+                'name': 'punctuation.definition.comment.mojom'
+            'end': '\\n'
+            'name': 'comment.line.double-slash.mojom'
+            'patterns': [
+              {
+                'match': '(?>\\\\\\s*\\n)'
+                'name': 'punctuation.separator.continuation.mojom'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  'literal':
+    'patterns': [
+      {
+        'include': '#string'
+      }
+      {
+        'match': '\\b(true|false)\\b'
+        'name': 'constant.bool.language.mojom'
+      }
+      {
+        'match': '\\b(float|double)(.INFINITY|.NEGATIVE_INFINITY|.NAN)\\b'
+        'name': 'constant.float.language.mojom'
+      }
+      {
+        'match': '\\b((0(x|X)[0-9a-fA-F]*)|(([0-9]+\\.?[0-9]*)|(\\.[0-9]+))((e|E)(\\+|-)?[0-9]+)?)\\b'
+        'name': 'constant.numeric.c'
+      }
+    ]
+  'string':
+    'patterns': [
+      {
+        'begin': '"'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.string.begin.mojom'
+        'end': '"'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.mojom'
+        'name': 'string.quoted.double.mojom'
+        'patterns': [
+          {
+            'include': '#string_escaped_char'
+          }
+        ]
+      }
+    ]
+  'string_escaped_char':
+    'patterns': [
+      {
+        'match': '\\\\(\\\\|[abefnprtv\'"?]|[0-3]\\d{,2}|[4-7]\\d?|x[a-fA-F0-9]{,2}|u[a-fA-F0-9]{,4}|U[a-fA-F0-9]{,8})'
+        'name': 'constant.character.escape.mojom'
+      }
+      {
+        'match': '\\\\.'
+        'name': 'invalid.illegal.unknown-escape.mojom'
+      }
+    ]
