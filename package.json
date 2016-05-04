@@ -2,8 +2,14 @@
   "name": "language-mojom",
   "version": "0.0.1",
   "description": "Syntax highlighting for Mojom",
+  "keywords": [
+    "mojo",
+    "mojom"
+  ],
+  "repository": "https://github.com/mojo/atom-language-mojom",
+  "license": "BSD-3-Clause",
   "engines": {
-    "atom": "*",
-    "node": "*"
-  }
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": []
 }
